@@ -1,0 +1,266 @@
+/*
+ * SettingsDialog.java
+ *
+ * Created on June 11, 2005, 11:25 AM
+ */
+
+package net.bruncle.wordinary;
+
+/**
+ *
+ * @author  Jeremy
+ */
+import java.awt.event.*;
+import javax.swing.event.*;
+ 
+public class SettingsDialog extends javax.swing.JDialog implements ActionListener, ChangeListener{
+    
+    public SettingsDialog(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
+        initComponents();
+    }
+    
+    private void initComponents() {
+        tabPane = new javax.swing.JTabbedPane();
+        pnlSpellingSkinning = new javax.swing.JPanel();
+        btnBackColour = new javax.swing.JButton();
+        lblBackColour = new javax.swing.JLabel();
+        lblBackColourLbl = new javax.swing.JLabel();
+        lblTextColour = new javax.swing.JLabel();
+        lblTextColourLbl = new javax.swing.JLabel();
+        lblSkin = new javax.swing.JLabel();
+        btnTextColour = new javax.swing.JButton();
+        lblSkin1 = new javax.swing.JLabel();
+        sldAccuracy = new javax.swing.JSlider();
+        jLabel1 = new javax.swing.JLabel();
+        pnlSymbols = new javax.swing.JPanel();
+        lblTitle = new javax.swing.JLabel();
+        lblSymbol1 = new javax.swing.JLabel();
+        lblSymbol2 = new javax.swing.JLabel();
+        lblSymbol3 = new javax.swing.JLabel();
+        lblSymbol4 = new javax.swing.JLabel();
+        lblSymbol5 = new javax.swing.JLabel();
+        lblSymbol6 = new javax.swing.JLabel();
+        lblSymbol7 = new javax.swing.JLabel();
+        lblSymbol8 = new javax.swing.JLabel();
+        lblSymbol9 = new javax.swing.JLabel();
+        lblSymbol0 = new javax.swing.JLabel();
+        lblInstruction = new javax.swing.JLabel();
+        lblInstr1 = new javax.swing.JLabel();
+        lblInstr2 = new javax.swing.JLabel();
+        lblInstr3 = new javax.swing.JLabel();
+        btnSave = new javax.swing.JButton();
+        for (int i = 0; i < txtSymbol.length; i++){
+        	//System.out.println("Loaded "+WordinaryFrame.getSymbols()[i]);
+        	txtSymbol[i] = new javax.swing.JTextField(((char)WordinaryFrame.getSymbols()[i])+"");
+        }
+        lblInstr3 = new javax.swing.JLabel();
+        lblInstr4 = new javax.swing.JLabel();
+
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Wordinary - Settings");
+        setName("dlgSettings");
+        pnlSpellingSkinning.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblBackColour.setBackground(WordinaryFrame.getBackColour());
+        lblBackColour.setForeground(WordinaryFrame.getBackColour());
+        lblBackColour.setOpaque(true);
+        pnlSpellingSkinning.add(lblBackColour, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 50, 40));
+        
+        btnBackColour.setOpaque(false);
+        pnlSpellingSkinning.add(btnBackColour, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 50, 40));
+        btnBackColour.addActionListener(this);
+
+        lblBackColourLbl.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 18));
+        lblBackColourLbl.setText("Background Colour");
+        pnlSpellingSkinning.add(lblBackColourLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 40, 160, 40));
+
+        lblTextColour.setBackground(WordinaryFrame.getTextColour());
+        lblTextColour.setForeground(WordinaryFrame.getTextColour());
+        lblTextColour.setOpaque(true);
+        pnlSpellingSkinning.add(lblTextColour, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 50, 40));
+
+        lblTextColourLbl.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 18));
+        lblTextColourLbl.setText("Text Colour");
+        pnlSpellingSkinning.add(lblTextColourLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 150, 40));
+
+        lblSkin.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 24));
+        lblSkin.setText("Skin:");
+        pnlSpellingSkinning.add(lblSkin, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 100, 30));
+
+        btnTextColour.setOpaque(false);
+        pnlSpellingSkinning.add(btnTextColour, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 50, 40));
+        btnTextColour.addActionListener(this);
+
+        lblSkin1.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 24));
+        lblSkin1.setText("Spelling:");
+        pnlSpellingSkinning.add(lblSkin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 100, 30));
+
+        sldAccuracy.setMajorTickSpacing(10);
+        sldAccuracy.setMinorTickSpacing(5);
+        sldAccuracy.setPaintLabels(true);
+        sldAccuracy.setPaintTicks(true);
+        sldAccuracy.setSnapToTicks(true);
+        sldAccuracy.setValue(80);
+        pnlSpellingSkinning.add(sldAccuracy, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, -1, -1));
+        sldAccuracy.addChangeListener(this);
+
+        jLabel1.setText("Required accuracy of spelling %");
+        pnlSpellingSkinning.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 190, -1));
+
+        tabPane.addTab("Spelling/GUI", pnlSpellingSkinning);
+
+        pnlSymbols.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblTitle.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 14));
+        lblTitle.setText("Symbols:");
+        pnlSymbols.add(lblTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 80, 20));
+
+        lblSymbol1.setText("0:");
+        pnlSymbols.add(lblSymbol1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 20, -1));
+
+        lblSymbol2.setText("1:");
+        pnlSymbols.add(lblSymbol2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 20, -1));
+
+        lblSymbol3.setText("2:");
+        pnlSymbols.add(lblSymbol3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 20, -1));
+
+        lblSymbol4.setText("3:");
+        pnlSymbols.add(lblSymbol4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 20, -1));
+
+        lblSymbol5.setText("4:");
+        pnlSymbols.add(lblSymbol5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 20, -1));
+
+        lblSymbol6.setText("5:");
+        pnlSymbols.add(lblSymbol6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 20, -1));
+
+        lblSymbol7.setText("6:");
+        pnlSymbols.add(lblSymbol7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 20, -1));
+
+        lblSymbol8.setText("7:");
+        pnlSymbols.add(lblSymbol8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 20, -1));
+
+        lblSymbol9.setText("8:");
+        pnlSymbols.add(lblSymbol9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 20, -1));
+
+        lblSymbol0.setText("9:");
+        pnlSymbols.add(lblSymbol0, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 20, -1));
+
+        lblInstruction.setText("Press ctrl + number to insert the associated symbol");
+        pnlSymbols.add(lblInstruction, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 250, 30));
+
+        btnSave.setText("Save");
+        pnlSymbols.add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 240, -1));
+        btnSave.addActionListener(this);
+	
+        lblInstr1.setText("Insert the unicode character code");
+        pnlSymbols.add(lblInstr1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, 170, 30));
+
+        lblInstr2.setText("or the character itself in the text box");
+        pnlSymbols.add(lblInstr2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 50, 180, 30));
+	
+	lblInstr3.setText("and then press save when you're ");
+        pnlSymbols.add(lblInstr3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 70, 160, 30));
+
+        lblInstr4.setText("done.");
+        pnlSymbols.add(lblInstr4, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 160, 30));
+	
+	int y = 30;
+	for (int i = 0; i < txtSymbol.length; i++){
+		pnlSymbols.add(txtSymbol[i], new org.netbeans.lib.awtextra.AbsoluteConstraints(30, y, 70, -1));
+		y += 20;
+	}
+
+        tabPane.addTab("Symbols", pnlSymbols);
+
+        getContentPane().add(tabPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, 310));
+
+        pack();
+    }
+       
+    public void actionPerformed(ActionEvent e){
+    	if (e.getSource() == btnBackColour){
+    		java.awt.Color colour = javax.swing.JColorChooser.showDialog(
+                     this,
+                     "Choose Background Color",
+                     WordinaryFrame.getBackColour());
+    		WordinaryFrame.setBackgroundColour(colour);
+                lblBackColour.setBackground(colour);
+                WordinaryFrame.refreshScreen();
+                WordinaryFrame.saveSettings();
+        }           
+        else if (e.getSource() == btnTextColour){
+        	java.awt.Color colour = javax.swing.JColorChooser.showDialog(
+                     this,
+                     "Choose text Color",
+                     WordinaryFrame.getTextColour());
+        	WordinaryFrame.setTextColour(colour);
+        	lblTextColour.setBackground(colour);
+        	WordinaryFrame.refreshScreen();
+        	WordinaryFrame.saveSettings();
+        }
+        else if (e.getSource() == btnSave)
+        	saveSymbols();
+    } 
+    
+    private void saveSymbols(){
+    	try{
+    		for (int i = 0; i < txtSymbol.length; i++){		
+	    		int code = txtSymbol[i].getText().charAt(0);
+	    		if (Character.isDigit(code))
+	    			code = Integer.parseInt(txtSymbol[i].getText());
+	    		WordinaryFrame.getSymbols()[i] = code;
+	    	}
+	    	WordinaryFrame.saveSettings();
+	    	lblInstruction.setText("Symbols saved successfully");
+	}
+	catch (Exception e){
+		e.printStackTrace();
+		lblInstruction.setText("There was something wrong with the symbols you entered:|");
+	}
+    }
+    		    
+    public void stateChanged(ChangeEvent e) {
+    	if (e.getSource() == sldAccuracy)
+    		if (!sldAccuracy.getValueIsAdjusting()){
+    			System.out.println("Spelling accuracy is now "+sldAccuracy.getValue()+"%");
+    			WordinaryFrame.setSpellingAccuracy(sldAccuracy.getValue());
+    			WordinaryFrame.saveSettings();
+    		}
+    }
+    			
+    private javax.swing.JButton btnBackColour;
+    private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnTextColour;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JSlider sldAccuracy;
+    private javax.swing.JLabel lblBackColour;
+    private javax.swing.JLabel lblBackColourLbl;
+    private javax.swing.JLabel lblInstr1;
+    private javax.swing.JLabel lblInstr2;
+    private javax.swing.JLabel lblInstr3;
+    private javax.swing.JLabel lblInstr4;
+    private javax.swing.JLabel lblInstruction;
+    private javax.swing.JLabel lblSkin;
+    private javax.swing.JLabel lblSkin1;
+    private javax.swing.JLabel lblSymbol0;
+    private javax.swing.JLabel lblSymbol1;
+    private javax.swing.JLabel lblSymbol2;
+    private javax.swing.JLabel lblSymbol3;
+    private javax.swing.JLabel lblSymbol4;
+    private javax.swing.JLabel lblSymbol5;
+    private javax.swing.JLabel lblSymbol6;
+    private javax.swing.JLabel lblSymbol7;
+    private javax.swing.JLabel lblSymbol8;
+    private javax.swing.JLabel lblSymbol9;
+    private javax.swing.JLabel lblTextColour;
+    private javax.swing.JLabel lblTextColourLbl;
+    private javax.swing.JLabel lblTitle;
+    private javax.swing.JPanel pnlSpellingSkinning;
+    private javax.swing.JPanel pnlSymbols;
+    private javax.swing.JTabbedPane tabPane;
+    private javax.swing.JTextField[] txtSymbol = new javax.swing.JTextField[11];
+    
+}

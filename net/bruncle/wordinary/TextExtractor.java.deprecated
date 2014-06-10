@@ -1,0 +1,115 @@
+package net.bruncle.wordinary;
+
+import org.xml.sax.*;
+import org.xml.sax.helpers.DefaultHandler;
+import java.io.*;
+import java.util.*;
+
+
+public class TextExtractor extends DefaultHandler {
+  
+  StringBuffer[] buffers = new StringBuffer[7];
+  int mode;
+  List<Word> wordList;
+  
+  public TextExtractor(List<Word> array) {
+  	wordList = array;
+  	renewBuffers();
+  }
+    
+  /**
+   * This method is called by the SAX XML parser when it encounters the equivalent of a String between a pair of tags
+   * It adds to the StringBuffer that is currently in use by the app
+   * @param  text  The array of characters that the parser located between the pair of tags
+  */  
+  public void characters(char[] text, int start, int length)
+     throws SAXException {
+      if (buffers[mode] != null) {
+        buffers[mode].append(text, start, length); 
+      }
+  }
+  
+  /**
+   * This method is called by the SAX XML parser when it encounters a start tag
+   * changes the current String buffer in use by the object
+   * @param  localName  The name of the tag
+  */  
+  public void startElement(String namespaceURI, 
+     String localName, String qualifiedName, Attributes atts) {
+      if (localName.equals("word")) {
+        renewBuffers();
+      }
+      if (localName.equals("english")) {
+        mode = 0;
+      }
+      else if (localName.equals("otherLanguage")) {
+        mode = 1;
+      }
+      else if (localName.equals("category")) {
+        mode = 2;
+      }
+      else if (localName.equals("otherLanguageName")) {
+        mode = 3;
+      }
+      else if (localName.equals("correct")) {
+        mode = 4;
+      }
+      else if (localName.equals("categoryL")){
+      	mode = 5;
+      }
+      else if (localName.equals("id"))
+      	mode = 6;
+  }
+  
+  byte catID;
+
+  /**
+   * This method is called by the SAX XML parser when it encounters an end tag
+   * it performs some parsing on the strings that have been stored
+   * @param  localName  The name of the tag
+  */  
+  public void endElement(String namespaceURI, String localName,
+     String qualifiedName) { 
+      try{
+      	      if (localName.equals("categoryL")){
+      	      	 String category = trim(buffers[5].toString());
+      	      	 WordinaryFrame.addCategory(new Category(category,catID),false);
+      	      	 catID++;
+      	      	 renewBuffers();
+      	      }
+	      if (localName.equals("word")) {
+	         String english = trim(buffers[0].toString());
+	         String other = trim(buffers[1].toString());
+	         String category = trim(buffers[2].toString());
+	         int correct = Integer.parseInt(trim(buffers[4].toString()));
+	         Word temp = new Word(english,other,category,correct);
+	         temp.setID(Integer.parseInt(trim(buffers[6].toString())));
+	         wordList.add(temp);
+	         renewBuffers();
+	      }    
+      }
+      catch (Exception e){e.printStackTrace();}
+  }
+  
+  /**
+   * Refreshes all the StringBuffer objects used to store data from the xml document
+  */  
+  void renewBuffers(){
+  	for (int i = 0; i < buffers.length; i++)
+  		buffers[i] = new StringBuffer();
+  }
+
+  /**
+   * Creates a substring of the String supplied to the method between the two opposing ":" characters
+   * @param  source  The String that is to have the white space removed from it
+   * @return  A new String object that has no useless white space in it
+  */  
+  static String trim(String source) {
+  	if (source == null)
+  		return "";
+  	String temp = source.substring(source.indexOf(":")+1);
+  	temp = temp.substring(0,temp.indexOf(":"));
+        return temp;
+  }
+
+}
